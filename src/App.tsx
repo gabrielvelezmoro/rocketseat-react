@@ -1,15 +1,10 @@
-import styled from 'styled-components'
-
-
-const Title = styled.h1`
-  font-size: 64px;
-  color: #8257e6;
-`
+import { GlobalStyle } from "./styles/global";
 
 export function App() {
   return (
     <div className="App">
-      <Title className='title'>hello world</Title>
+      <h1>hello world</h1>
+      <GlobalStyle/>
     </div>
   );
 }
