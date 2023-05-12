@@ -2,7 +2,6 @@ import { ReactNode, createContext, useEffect, useState} from 'react'
 import { api } from './services/api';
 
 
-export const TransactionsContext = createContext<ITransaction[]>([]);
 
 interface ITransaction {
     id: number;
@@ -13,9 +12,20 @@ interface ITransaction {
     createdAt: string;
 }
 
+
+type TransactionInput = Omit<ITransaction, 'id' | 'createdAt'>
+
 interface ITransctionsProviderProps {
     children: ReactNode
 }
+interface ITransactionsContextData {
+    transactions: ITransaction[];
+    createTransaction: (transaction: TransactionInput) => void;
+}
+
+export const TransactionsContext = createContext<ITransactionsContextData>(
+    {} as ITransactionsContextData
+    );
 
 export function TransactionsProvider({children}: ITransctionsProviderProps) {
     
@@ -26,8 +36,13 @@ export function TransactionsProvider({children}: ITransctionsProviderProps) {
             .then(response => setTransactions(response.data.transactions))
     },[])
 
+     function createTransaction(transaction: TransactionInput){
+        api.post('/transactions', transaction)
+    }
+
+
     return(
-        <TransactionsContext.Provider value={transactions}>
+        <TransactionsContext.Provider value={{transactions, createTransaction}}>
             {children}
         </TransactionsContext.Provider>
     )
