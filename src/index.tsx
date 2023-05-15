@@ -21,7 +21,7 @@ createServer({
         {
           id: 2,
           title: 'Internet',
-          type: 'deposit',
+          type: 'withdraw',
           amount: 500,
           category: 'Contas',
           createdAt: new Date('2023-05-11 20:38:00')
